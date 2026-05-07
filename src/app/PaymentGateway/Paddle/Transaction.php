@@ -8,13 +8,17 @@ use App\Enums\Stauts;
 
 class Transaction
 {
+    
+    private static int $count = 0;
+    private string $status = 'pending';
 
     public function __construct
     (
-        private string $status = 'pending'
+        public float $amount,
+        public string $description,
     )
     {
-        var_dump(Stauts::PAID);
+        self::$count++;
     }
 
     public function setStatus(string $status)
@@ -25,5 +29,15 @@ class Transaction
         }
         $this->status = $status;
         return $this;
+    }
+
+    public static function getCount()
+    {
+        return self::$count;
+    }
+
+    public function process()
+    {
+        echo 'Processing paddle transaction...';
     }
 }
