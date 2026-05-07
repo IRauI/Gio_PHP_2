@@ -14,11 +14,22 @@ class Transaction
 
     public function __construct
     (
-        public float $amount,
-        public string $description,
+        private float $amount
     )
     {
         self::$count++;
+    }
+
+    public function process()
+    {
+        echo 'Processing $' . $this->amount . ' paddle transaction...';
+    }
+
+    
+
+    public static function getCount()
+    {
+        return self::$count;
     }
 
     public function setStatus(string $status)
@@ -29,15 +40,5 @@ class Transaction
         }
         $this->status = $status;
         return $this;
-    }
-
-    public static function getCount()
-    {
-        return self::$count;
-    }
-
-    public function process()
-    {
-        echo 'Processing paddle transaction...';
     }
 }
