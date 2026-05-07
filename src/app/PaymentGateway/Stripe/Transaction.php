@@ -6,5 +6,8 @@ namespace App\PaymentGateway\Stripe;
 
 class Transaction
 {
-    
+    public function __contruct()
+    {
+        
+    }
 }
