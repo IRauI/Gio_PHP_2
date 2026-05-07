@@ -1,19 +1,30 @@
 <?php
 
-require_once('../PaymentGateway/Paddle/Transaction.php');
-require_once('../PaymentGateway/Paddle/CustomerProfile.php');
-require_once('../PaymentGateway/Paddle/DateTime.php');
+//require_once('../app/PaymentGateway/Paddle/Transaction.php');
+//require_once('../app/PaymentGateway/Paddle/CustomerProfile.php');
+//require_once('../app/Notification/Email.php');
+//require_once('../app/PaymentGateway/Stripe/Transaction.php');
 
-require_once('../Notification/Email.php');
+/*
+spl_autoload_register(
+    function($class)
+    {
+    $path = __DIR__ . '/../' . lcfirst(str_replace('\\', '/', $class) . '.php');
+    
+    if (file_exists($path)){
+        require $path;
+    }
+}, prepend: true);
+*/
 
-require_once('../PaymentGateway/Stripe/Transaction.php');
+require __DIR__ . '/../vendor/autoload.php';
 
-//use PaymentGateway\Paddle\{Transaction, CustomerProfile};
-use PaymentGateway\Paddle AS PA;
-use PaymentGateway\Stripe\Transaction as StripeTransaction;
+use App\PaymentGateway\Paddle\Transaction;
 
-$paddleTransaction = new PA\Transaction();
-$stripeTransaction = new StripeTransaction();
-$paddleCustomerProfile = new PA\CustomerProfile();
+$paddleTransaction = new Transaction();
 
-var_dump($paddleTransaction, $stripeTransaction, $paddleCustomerProfile);
+$id = new \Ramsey\Uuid\UuidFactory();
+
+echo $id->uuid4();
+
+var_dump($paddleTransaction);
