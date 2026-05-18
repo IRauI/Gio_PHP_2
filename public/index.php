@@ -3,5 +3,5 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 echo '<pre>';
-var_dump($_SERVER);
+print_r($_SERVER);
 echo '</pre>';
