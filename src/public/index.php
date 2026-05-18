@@ -1,10 +1,7 @@
 <?php
 
-use App\DB;
-use App\Enums\Stauts;
-use App\PaymentGateway\Paddle\Transaction;
+require_once __DIR__ . '/../vendor/autoload.php';
 
-require __DIR__ . '/../vendor/autoload.php';
-
-$transaction1 = new Transaction(25);
-$transaction1->process();
+echo '<pre>';
+var_dump($_SERVER);
+echo '</pre>';
