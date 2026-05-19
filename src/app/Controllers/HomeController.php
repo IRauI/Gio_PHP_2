@@ -10,7 +10,15 @@ class HomeController
 {
     public function index() : View
     {
-        return View::make('index', ['foo' => 'bar']);
+        return View::make('index');
+    }
+
+    public function download()
+    {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: atttachment;filename="myfile.pdf"');
+
+        readfile(STORAGE_PATH . '/receipt 6-20-2021.pdf');
     }
 
     public function upload()
@@ -19,8 +27,7 @@ class HomeController
 
         move_uploaded_file($_FILES['receipt']['tmp_name'], $filePath);
 
-        echo '<pre>';
-        var_dump(pathinfo($filePath));
-        echo '</pre>';
+        header('Location: /');
+        exit;
     }
 }
