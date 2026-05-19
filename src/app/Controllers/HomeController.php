@@ -5,11 +5,35 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\View;
+use PDO;
+use PDOException;
 
 class HomeController
 {
     public function index() : View
     {
+        try{
+            $db = new PDO('pgsql:host=db;dbname=gio_php', 'postgres', 'postgres', [
+
+            ]);
+
+            $email = $_GET['email'];
+            $query = 'SELECT * FROM users WHERE email = :email';
+
+            $stmt = $db->prepare($query);
+            $stmt->execute(
+                ['email' => $email]
+            );
+
+            foreach($stmt->fetchAll() as $user){
+                echo '<pre>';
+                var_dump($user);
+                echo '</pre>';
+            }
+        }catch(PDOException $e){
+            throw new PDOException($e->getMessage(), (int) $e->getCode());
+        }
+
         return View::make('index');
     }
 
