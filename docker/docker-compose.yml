@@ -17,3 +17,17 @@ services:
     volumes:
       - ../src:/var/www
       - ./nginx:/etc/nginx/conf.d
+  db:
+    image: postgres:18.4-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: gio_php
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+volumes:
+  pgdata:
