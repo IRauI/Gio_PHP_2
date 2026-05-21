@@ -13,9 +13,12 @@ class HomeController
     public function index() : View
     {
         try{
-            $db = new PDO('pgsql:host=db;dbname=gio_php', 'postgres', 'postgres', [
-
-            ]);
+           $db = new PDO(
+                'pgsql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_DATABASE'],
+                $_ENV['DB_USER'], 
+                $_ENV['DB_PASSWORD'],
+                []
+            );
 
             $email = $_GET['email'];
             $query = 'SELECT * FROM users WHERE email = :email';
