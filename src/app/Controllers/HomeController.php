@@ -4,40 +4,33 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Invoice;
+use App\Models\User;
+use App\Models\UserInvoice;
 use App\View;
-use PDO;
-use PDOException;
 
 class HomeController
 {
     public function index() : View
     {
-        try{
-           $db = new PDO(
-                'pgsql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_DATABASE'],
-                $_ENV['DB_USER'], 
-                $_ENV['DB_PASSWORD'],
-                []
-            );
+        $email = 'alex@doe.com';
+        $name = 'Alex Doe';
+        $amount = 25;
+        
+        $userModel = new User();
+        $invoiceModel = new Invoice();
 
-            $email = $_GET['email'];
-            $query = 'SELECT * FROM users WHERE email = :email';
+        $invoiceId = (new UserInvoice($userModel, $invoiceModel))->register(
+            [
+                'email' => $email,
+                'name' => $name
+            ],
+            [
+                'amount' => $amount
+            ]
+        );
 
-            $stmt = $db->prepare($query);
-            $stmt->execute(
-                ['email' => $email]
-            );
-
-            foreach($stmt->fetchAll() as $user){
-                echo '<pre>';
-                var_dump($user);
-                echo '</pre>';
-            }
-        }catch(PDOException $e){
-            throw new PDOException($e->getMessage(), (int) $e->getCode());
-        }
-
-        return View::make('index');
+        return View::make('index', ['invoice' => $invoiceModel->find($invoiceId)]);
     }
 
     public function download()
